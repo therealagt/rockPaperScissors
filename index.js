@@ -4,35 +4,84 @@ const beats = {
     Paper: "Rock"
 };
 
-function getHumanChoice() {
-    let userPrompt = prompt ("Rock, Paper, or Scissors");
-    console.log(userPrompt);
-    return userPrompt;
-};
+let humanScore = 0;
+let computerScore = 0;
+let humanRoundScore = 0;
+let computerRoundScore = 0;
+
+document.getElementById('rockBtn').onclick = () => playRound('Rock');
+document.getElementById('paperBtn').onclick = () => playRound('Paper');
+document.getElementById('scissorsBtn').onclick = () => playRound('Scissors');
 
 function getComputerChoice() {
     const choices = ["Rock", "Paper", "Scissors"];
     const randomIndex = Math.floor(Math.random() * choices.length);
     const computerChoice = choices[randomIndex];
-    console.log(computerChoice);
+    showOutput(computerChoice);
     return computerChoice;
 };
 
-function playRound() {
-    const human = getHumanChoice();
+function showOutput(message) {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML += message + "<br>";
+}
+
+function playRound(human) {
     const computer = getComputerChoice();
 
     if (human === computer) {
-        console.log("Draw!");
+        showOutput("Draw!");
     } else if (beats[human] === computer) {
-        console.log("You win!");
+        showOutput("You win!");
     } else {
-        console.log("Computer wins!");
+        showOutput("Computer wins!");
+    }
+    scoreVariables(human, computer);
+}
+
+function scoreVariables(human, computer) {
+    if (human === computer) {
+        humanScore = humanScore +0;
+    } else if (beats[human] === computer) {
+        humanScore = humanScore +1;
+    } else {
+        computerScore = computerScore +1;
+    }
+        showOutput("Human Score: " + humanScore + " | Computer Score: " + computerScore);
+}
+
+function scoreRoundVariables(humanScore, computerScore) {
+    if (humanScore === 5) {
+        humanRoundScore = humanRoundScore +1;
+        showOutput("Human wins the game!\nRundenscore: Human " + humanRoundScore + " - Computer " + computerRoundScore);
+    } else if (computerScore === 5) {
+        computerRoundScore = computerRoundScore +1;
+        showOutput("Computer wins the game!\nRundenscore: Human " + humanRoundScore + " - Computer " + computerRoundScore);
     }
 }
 
-playRound();
+/*
+function scoreEndGame(humanRoundScore, computerRoundScore) {
+    if (humanRoundScore === 3) {
+        console.log("Human wins the game!");
+    } else if (computerRoundScore === 3) {
+        console.log("Computer wins the game!");
+    }
+}
 
+for (let i = 0; i < 5; i++) {
+    while (humanScore < 3 && computerScore < 3) {
+        playRound();
+    }
+    scoreRoundVariables (humanScore, computerScore);
+    humanScore = 0;
+    computerScore = 0;
+    scoreEndGame (humanRoundScore, computerRoundScore);
+    if (humanRoundScore === 3 || computerRoundScore === 3); {
+        break;
+    }
+}
+*/
 
 /*
 // Pseudocode RockPaperScissors
